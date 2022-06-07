@@ -1,0 +1,18 @@
+syntax = "proto3";
+package org.code.adsk.sample.commodity;
+
+service CommodityService {
+  rpc addCommodity(Commodity) returns (CommodityId);
+  rpc getCommodity(CommodityId) returns (Commodity);
+}
+
+
+message Commodity {
+  string id = 1;
+  string name = 2;
+  string desc = 3;
+}
+
+message CommodityId {
+  string value = 1;
+}

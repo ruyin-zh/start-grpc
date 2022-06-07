@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package org.code.adsk.sample.order;
+
+
+service OrderManagement {
+  //一元rpc方法
+  rpc getOrder(google.protobuf.StringValue) returns (Order);
+  //服务端流rpc方法
+  rpc searchOrders(google.protobuf.StringValue) returns (stream Order){}
+  //客户端流rpc方法
+  rpc updateOrders(stream Order) returns (google.protobuf.StringValue);
+  //通过将方法参数和返回参数均声明为stream,可以定义双向流的rpc方法
+  rpc processOrders(stream google.protobuf.StringValue) returns (stream CombinedShipment);
+}
+
+message Order {
+  string id = 1;
+  repeated string items = 2;
+  string desc = 3;
+  float price = 4;
+  string destination = 5;
+}
+
+message CombinedShipment {
+  string id = 1;
+  string status = 2;
+  repeated Order orderList = 3;
+}
